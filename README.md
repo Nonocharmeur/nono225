@@ -10,6 +10,8 @@ pinned: false
 
 # Nono — AI video studio
 
+[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2FNonocharmeur%2Fnono225)
+
 Une application Next.js bilingue pour lancer des générations texte→vidéo ou image→vidéo, suivre leur état et gérer une galerie locale. Le moteur est interchangeable via l’interface `VideoProvider`; l’adaptateur Hugging Face est fourni.
 
 > **Limites importantes :** ce projet n’héberge pas de modèle vidéo. Hugging Face Inference API n’offre pas nécessairement un quota gratuit permanent pour chaque modèle : l’accès, le temps d’attente et les limites dépendent du compte, du modèle et de la disponibilité du fournisseur. Une génération réelle nécessite `HF_TOKEN`, un modèle pris en charge et FFmpeg. L’application affiche une erreur explicite lorsque ces conditions ne sont pas remplies.
@@ -76,11 +78,11 @@ Le modèle SVD configuré par défaut n’utilise pas le prompt de mouvement pou
 
 ### Render (service Docker)
 
-1. Créer un service **Web Service** lié au dépôt et choisir l’environnement Docker (le `Dockerfile` installe FFmpeg).
-2. Définir les variables Hugging Face ci-dessus et `DATA_DIR=/var/data`.
-3. Si le plan actuel le permet, monter un disque persistant sur `/var/data`. Sans stockage persistant, l’historique disparaît au redémarrage.
+1. Cliquer sur le bouton **Deploy on Render** ci-dessus ou créer un **Blueprint** depuis ce dépôt.
+2. Ajouter `HF_TOKEN` dans le formulaire Render lors de la création. Render demande cette valeur parce que le blueprint la définit avec `sync: false`.
+3. Après le premier démarrage, vérifier `/api/jobs` dans les journaux Render.
 
-Les plans gratuits, le stockage persistant et les limites de durée d’exécution de Render évoluent ; vérifier les conditions actuelles avant usage. Un service suspendu ne peut pas exécuter de tâches.
+Le blueprint choisit le plan gratuit et stocke les fichiers sous `/tmp/data` : la galerie et le quota sont réinitialisés lors d’un redémarrage/sommeil de l’instance. Ajouter un disque persistant et un service payant si l’historique doit survivre. Les plans et limites de Render peuvent évoluer. Un service en veille ne peut pas exécuter de tâches.
 
 ### Hugging Face Spaces
 

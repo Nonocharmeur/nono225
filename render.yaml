@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: nono225-ai-video-studio
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: nonocharmeur-ai-video-generator
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/jobs
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /tmp/data
+      - key: DAILY_GENERATION_LIMIT
+        value: "3"
+      - key: HF_TOKEN
+        sync: false
+      - key: HF_TEXT_TO_VIDEO_MODEL
+        value: Wan-AI/Wan2.1-T2V-1.3B
+      - key: HF_IMAGE_TO_VIDEO_MODEL
+        value: stabilityai/stable-video-diffusion-img2vid-xt
