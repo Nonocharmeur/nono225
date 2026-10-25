@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import {
   ArrowDownToLine, ArrowUpRight, ChevronDown, Clock3, Film, ImagePlus,
   LoaderCircle, Moon, Sparkles, Sun, Trash2, WandSparkles, X
@@ -27,7 +28,7 @@ const copy = {
     image: "Image de départ", upload: "Importer une image", uploadHint: "JPG, PNG ou WebP · 10 Mo max", style: "Style", format: "Format", duration: "Durée",
     realistic: "Réaliste", anime: "Anime", cinematic: "Cinématique", "3d": "3D", landscape: "Paysage", portrait: "Portrait", square: "Carré",
     watermark: "Ajouter « Généré par IA »", generate: "Générer la vidéo", generating: "Ajout à la file…", free: "gratuit / jour",
-    queue: "Dans la file", processing: "Création", completed: "Prête", failed: "Échec", empty: "Votre galerie est encore vide.",
+    queue: "Dans la file", queued: "En attente", processing: "Création", completed: "Prête", failed: "Échec", empty: "Votre galerie est encore vide.",
     emptyHint: "Vos créations apparaîtront ici.", download: "Télécharger", delete: "Supprimer", remaining: "générations gratuites restantes",
     moderation: "Les prompts faisant l’apologie de la violence ou décrivant du contenu sexuel explicite sont refusés.",
     improveDone: "Prompt amélioré", noPrompt: "Écrivez d’abord une idée à améliorer.", promptImageOnly: "Ajoutez une image ou écrivez une description.",
@@ -45,7 +46,7 @@ const copy = {
     image: "Starting image", upload: "Upload an image", uploadHint: "JPG, PNG or WebP · max 10 MB", style: "Style", format: "Format", duration: "Duration",
     realistic: "Realistic", anime: "Anime", cinematic: "Cinematic", "3d": "3D", landscape: "Landscape", portrait: "Portrait", square: "Square",
     watermark: "Add “AI generated” label", generate: "Generate video", generating: "Adding to queue…", free: "free / day",
-    queue: "Queued", processing: "Creating", completed: "Ready", failed: "Failed", empty: "Your gallery is still empty.",
+    queue: "Queued", queued: "Queued", processing: "Creating", completed: "Ready", failed: "Failed", empty: "Your gallery is still empty.",
     emptyHint: "Your creations will show up here.", download: "Download", delete: "Delete", remaining: "free generations left",
     moderation: "Prompts glorifying violence or describing explicit sexual content are rejected.",
     improveDone: "Prompt improved", noPrompt: "Write an idea first.", promptImageOnly: "Add an image or write a description.",
@@ -249,7 +250,7 @@ export default function Home() {
             <div className="mt-1 flex justify-between text-[10px] text-black/40 dark:text-white/40"><span>{t.moderation}</span><span>{prompt.length}/1000</span></div>
             <div className="mt-5">
               <div className="mb-2 flex items-center justify-between text-xs font-bold"><span>{t.image}</span>{image && <button type="button" onClick={() => setImage(null)} className="text-[10px] font-semibold text-black/45 hover:text-red-500 dark:text-white/45">{t.removeImage}</button>}</div>
-              {imagePreview ? <div className="relative h-36 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10"><img src={imagePreview} alt="Image à animer" className="h-full w-full object-cover" /><div className="absolute bottom-2 left-2 rounded-lg bg-black/65 px-2 py-1 text-[10px] text-white">{image?.name}</div><button onClick={() => fileInput.current?.click()} className="absolute right-2 top-2 rounded-lg bg-black/65 p-2 text-white" aria-label={t.uploadAgain}><ImagePlus size={15} /></button></div> :
+              {imagePreview ? <div className="relative h-36 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10"><Image src={imagePreview} alt={lang === "fr" ? "Image à animer" : "Image to animate"} width={640} height={360} unoptimized className="h-full w-full object-cover" /><div className="absolute bottom-2 left-2 rounded-lg bg-black/65 px-2 py-1 text-[10px] text-white">{image?.name}</div><button onClick={() => fileInput.current?.click()} className="absolute right-2 top-2 rounded-lg bg-black/65 p-2 text-white" aria-label={t.uploadAgain}><ImagePlus size={15} /></button></div> :
                 <button onClick={() => fileInput.current?.click()} className="flex w-full items-center gap-3 rounded-2xl border border-dashed border-black/15 bg-[#fafbf7] px-4 py-3.5 text-left transition hover:border-[#a2ce51] dark:border-white/15 dark:bg-[#131410]">
                   <span className="grid h-9 w-9 place-items-center rounded-xl bg-lime/40"><ImagePlus size={16} /></span><span><span className="block text-xs font-bold">{t.upload}</span><span className="mt-1 block text-[10px] text-black/45 dark:text-white/40">{t.uploadHint}</span></span>
                 </button>}

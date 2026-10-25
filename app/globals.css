@@ -1,6 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-ink: #11120f;
+  --color-paper: #f7f7f2;
+  --color-lime: #c5f36a;
+  --font-sans: Arial, Helvetica, sans-serif;
+}
 
 :root { color-scheme: light; }
 * { box-sizing: border-box; }

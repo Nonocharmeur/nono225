@@ -1,3 +1,13 @@
+---
+title: Nono AI Video Studio
+emoji: 🎬
+colorFrom: lime
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Nono — AI video studio
 
 Une application Next.js bilingue pour lancer des générations texte→vidéo ou image→vidéo, suivre leur état et gérer une galerie locale. Le moteur est interchangeable via l’interface `VideoProvider`; l’adaptateur Hugging Face est fourni.
@@ -13,6 +23,7 @@ Une application Next.js bilingue pour lancer des générations texte→vidéo ou
 - Modération basique des descriptions en français et anglais.
 - Filigrane facultatif, incrusté avec FFmpeg ; conversion au format et à la durée demandés.
 - Interface responsive, mode sombre et libellés FR/EN.
+- CI GitHub Actions avec contrôles TypeScript, lint et build de production à chaque push et pull request.
 
 ## Installation locale
 

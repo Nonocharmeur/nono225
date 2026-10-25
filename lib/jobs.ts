@@ -32,7 +32,9 @@ type JobRow = Omit<VideoJob, "watermark"> & {
 };
 
 const dataDir = path.resolve(process.env.DATA_DIR || "./data");
-const globalDatabase = globalThis as typeof globalThis & { nonoVideoDatabase?: Database };
+const globalDatabase = globalThis as typeof globalThis & {
+  nonoVideoDatabase?: InstanceType<typeof Database>;
+};
 
 function getDatabase() {
   if (globalDatabase.nonoVideoDatabase) return globalDatabase.nonoVideoDatabase;
